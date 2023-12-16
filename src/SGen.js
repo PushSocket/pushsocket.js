@@ -7,6 +7,9 @@ var numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 var random = function (array) {
     return array[Math.floor(Math.random() * array.length)];
 };
+/**
+* Generates a random string of 10 characters; used as the socket ID.
+*/
 function generateSecureID() {
     var id = "".concat(random(uppercase)).concat(random(uppercase)).concat(random(lowercase)).concat(random(numbers)).concat(random(uppercase)).concat(random(lowercase)).concat(random(numbers)).concat(random(uppercase)).concat(random(numbers)).concat(random(uppercase)).concat(random(uppercase)).concat(random(lowercase));
     return id;
