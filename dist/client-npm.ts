@@ -90,13 +90,14 @@ class PushSocket {
 
   /** 
   * Observe Method; Observes a channel for message(s).
-  * Usage: ```js
+  * Usage: 
+  * ```js
   * // channel: optional, defaults to "GLOBAL"
   *
   * PushSocket.observe("<channel: String>", (msg) => {
   *   // ``msg.data<String>`` for the message contents. 
   * });
-  * ````
+  * ```
   */
   observe(channel: string, callback: Function) {
     this.ws.addEventListener("message", (e) => {
