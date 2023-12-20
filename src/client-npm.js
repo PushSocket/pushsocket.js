@@ -96,7 +96,8 @@ var PushSocket = /** @class */ (function () {
         this.ws.send(JSON.stringify({
             type: "message",
             channel: channel || "GLOBAL",
-            data: data
+            data: data,
+            id: this.id
         }));
     };
     Object.defineProperty(PushSocket.prototype, "secureID", {

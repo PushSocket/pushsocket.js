@@ -1,6 +1,6 @@
 {
   "name": "pushsocket.js",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "An Open-Sourced remix of SimpleSocket, built from Scratch.",
   "main": "index.js",
   "type": "module",
@@ -9,7 +9,8 @@
     "build": "tsc dist/* && sleep 2.5 && mv ./client-npm.js ./src/ && mv ./SGen.js ./src/",
     "build:docs": "npx typedoc ./dist/* && sleep 1 && rm -rf ./repo2/docs && mv ./docs ./repo2",
     "push:docs": "cd /home/runner/PushSocket/repo2 && git config --global user.email \"contact@myxapk.tech\" && git config --global user.name \"NullClock\" && git add . && git commit -m \"docs: Deploy docs\" && git push -u origin master",
-    "push": "cd /home/runner/PushSocket/  && git config --global user.email \"contact@myxapk.tech\" && git config --global user.name \"NullClock\" && git add . && git commit -m \"Push PushSocket from Replit\""
+    "push": "cd /home/runner/PushSocket/  && git config --global user.email \"contact@myxapk.tech\" && git config --global user.name \"NullClock\" && git add . && git commit -m \"Push PushSocket from Replit\"",
+    "push:npm": "npm login && npm --no-git-tag-version version patch && npm --no-git-tag-version publish"
   },
   "keywords": [],
   "author": "XAPK Enterprises",

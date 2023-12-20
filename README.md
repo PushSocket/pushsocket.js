@@ -4,3 +4,4 @@ PushSocket is a simple Open-Sourced, Public pub/sub service (if you'd like to ev
 
 I wouldn't even call it a pub/sub service, I'm just calling it that cause there's no other word.
 # Docs
+[https://pushsocket.github.io/](https://pushsocket.github.io/)

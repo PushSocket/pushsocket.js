@@ -122,7 +122,8 @@ class PushSocket {
     this.ws.send(JSON.stringify({
       type: "message",
       channel: channel || "GLOBAL",
-      data: data
+      data: data,
+      id: this.id
     }));
   }
   /** 

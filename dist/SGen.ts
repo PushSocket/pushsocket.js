@@ -64,13 +64,7 @@ let random = (array: Array<any>) => {
  * Generates a random string of 10 characters; used as the socket ID.
  */
 function generateSecureID(): string {
-  const id = `${random(uppercase)}${random(uppercase)}${random(
-    lowercase,
-  )}${random(numbers)}${random(uppercase)}${random(lowercase)}${random(
-    numbers,
-  )}${random(uppercase)}${random(numbers)}${random(uppercase)}${random(
-    uppercase,
-  )}${random(lowercase)}`;
+  const id = `${random(uppercase)}${random(uppercase)}${random(lowercase)}${random(numbers)}${random(uppercase)}${random(lowercase)}${random(numbers)}${random(uppercase)}${random(numbers)}${random(uppercase)}${random(uppercase)}${random(lowercase)}`;
 
   return id;
 }
