@@ -1,8 +1,6 @@
-import * as ps from "../src/client-npm.js";
+const ps = require("pushsocket.js");
 
-const socket = new ps.PushSocket({
-  space_id: "testingGlobal"
-}, null, handleConnect);
+const socket = new ps.PushSocket(null, null, handleConnect);
 
 function handleConnect() {
   console.log("Connected to PS Global Testing!");

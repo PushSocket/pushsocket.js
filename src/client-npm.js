@@ -32,9 +32,9 @@ var PushSocket = /** @class */ (function () {
         this.__noop__ = function () {
             return;
         };
-        this.space = config.space_id || "global";
+        this.space = config?.space_id || "global";
         this.connectedCallback = onConnect;
-        this.spacePassword = config.password || "password";
+        this.spacePassword = config?.password || "password";
         this.id = (0, SGen_js_1.generateSecureID)();
         this.connected = false;
         this.ws = new WebSocket("wss://pushserver.cubicdev.repl.co");
@@ -81,6 +81,8 @@ var PushSocket = /** @class */ (function () {
             if (d.type !== "message")
                 return;
             if (d.channel !== channel)
+                return;
+            if (d.id == this.id)
                 return;
             callback(d);
         });

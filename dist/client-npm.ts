@@ -55,9 +55,9 @@ class PushSocket {
   * );
   */
   constructor(config: PSConfig, params: Object, onConnect: Function) {
-    this.space = config.space_id || "global";
+    this.space = config?.space_id || "global";
     this.connectedCallback = onConnect;
-    this.spacePassword = config.password || "password";
+    this.spacePassword = config?.password || "password";
     this.id = generateSecureID();
     this.connected = false;
     this.ws = new WebSocket("wss://pushserver.cubicdev.repl.co");
@@ -106,6 +106,7 @@ class PushSocket {
 
       if (d.type !== "message") return;
       if (d.channel !== channel) return;
+      if (d.id == this.id) return;
 
       callback(d);
     });
