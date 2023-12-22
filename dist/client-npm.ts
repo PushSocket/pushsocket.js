@@ -54,7 +54,7 @@ class PushSocket {
   *   handleConnect // will be called when the socket is connected.
   * );
   */
-  constructor(config: PSConfig, params: Object, onConnect: Function) {
+  constructor(config: PSConfig, params: object, onConnect: Function) {
     this.space = config?.space_id || "global";
     this.connectedCallback = onConnect;
     this.spacePassword = config?.password || "password";
@@ -106,7 +106,6 @@ class PushSocket {
 
       if (d.type !== "message") return;
       if (d.channel !== channel) return;
-      if (d.id == this.id) return;
 
       callback(d);
     });
@@ -126,6 +125,26 @@ class PushSocket {
       data: data,
       id: this.id
     }));
+  }
+  /** 
+  * Connect Method; if you get disconnected from the space, you can call this method with the space id and space password again to reconnect.
+  * PARAM 1: space_id: String, the space to connect to.
+  * PARAM 2: space_password: String, the password to the space.
+  */
+  connect(space_id: string = "global", space_password: string = "password", params: object) {
+    this.ws = new WebSocket("wss://pushserver.cubicdev.repl.co");
+    this.space = space_id;
+    this.spacePassword = space_password;
+
+    this.ws.onopen = () => {
+      this.ws.send(JSON.stringify({
+        type: "connect",
+        id: this.id,
+        space: this.space,
+        password: this.spacePassword,
+        params: params
+      }));
+    }
   }
   /** 
   * ``secureID`` property; returns the secure id of the socket.

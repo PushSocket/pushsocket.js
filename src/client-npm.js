@@ -32,9 +32,9 @@ var PushSocket = /** @class */ (function () {
         this.__noop__ = function () {
             return;
         };
-        this.space = config?.space_id || "global";
+        this.space = (config === null || config === void 0 ? void 0 : config.space_id) || "global";
         this.connectedCallback = onConnect;
-        this.spacePassword = config?.password || "password";
+        this.spacePassword = (config === null || config === void 0 ? void 0 : config.password) || "password";
         this.id = (0, SGen_js_1.generateSecureID)();
         this.connected = false;
         this.ws = new WebSocket("wss://pushserver.cubicdev.repl.co");
@@ -82,8 +82,6 @@ var PushSocket = /** @class */ (function () {
                 return;
             if (d.channel !== channel)
                 return;
-            if (d.id == this.id)
-                return;
             callback(d);
         });
     };
@@ -101,6 +99,28 @@ var PushSocket = /** @class */ (function () {
             data: data,
             id: this.id
         }));
+    };
+    /**
+    * Connect Method; if you get disconnected from the space, you can call this method with the space id and space password again to reconnect.
+    * PARAM 1: space_id: String, the space to connect to.
+    * PARAM 2: space_password: String, the password to the space.
+    */
+    PushSocket.prototype.connect = function (space_id, space_password, params) {
+        var _this = this;
+        if (space_id === void 0) { space_id = "global"; }
+        if (space_password === void 0) { space_password = "password"; }
+        this.ws = new WebSocket("wss://pushserver.cubicdev.repl.co");
+        this.space = space_id;
+        this.spacePassword = space_password;
+        this.ws.onopen = function () {
+            _this.ws.send(JSON.stringify({
+                type: "connect",
+                id: _this.id,
+                space: _this.space,
+                password: _this.spacePassword,
+                params: params
+            }));
+        };
     };
     Object.defineProperty(PushSocket.prototype, "secureID", {
         /**
