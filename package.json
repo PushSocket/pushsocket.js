@@ -1,6 +1,6 @@
 {
   "name": "pushsocket.js",
-  "version": "1.0.6",
+  "version": "1.0.8",
   "description": "An Open-Sourced remix of SimpleSocket, built from Scratch.",
   "main": "src/client-npm.js",
   "scripts": {
@@ -16,7 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "node-fetch": "^3.2.6",
-    "pushsocket.js": "^1.0.6",
+    "pushsocket.js": "^1.0.7",
     "typedoc": "^0.25.4",
     "ws": "^8.15.1"
   },

@@ -13,27 +13,6 @@ function generateSecureID() {
 }
 
 class PushSocket {
-  /**
-  * PushSocket constructor; Accepts a config object, params to be passed to the space, and a callback to be called when the socket is connected.
-  *
-  * Below is an example of importing and initalizing PushSocket.
-  * ```js
-  * // as CommonJS Module
-  * const ps = require("pushsocket.js");
-  * // as ES Module
-  * import * as ps from "pushsocket.js";
-  *
-  * const socket = new ps.PushSocket(
-  *   {
-  *     // space_id: optional, defaults to "global"
-  *     space_id: "<space: String>",
-  *     // password: optional, defaults to "password"
-  *     password: "<password: String>"
-  *   },
-  *   null, // null, no params to the space.
-  *   handleConnect // will be called when the socket is connected.
-  * );
-  */
   constructor(config, params, onConnect) {
     this.space = config?.space_id || "global";
     this.connectedCallback = onConnect;
@@ -68,17 +47,6 @@ class PushSocket {
     }
   }
 
-  /** 
-  * Observe Method; Observes a channel for message(s).
-  * Usage: 
-  * ```js
-  * // channel: optional, defaults to "GLOBAL"
-  *
-  * PushSocket.observe("<channel: String>", (msg) => {
-  *   // ``msg.data<String>`` for the message contents. 
-  * });
-  * ```
-  */
   observe(channel, callback) {
     this.ws.addEventListener("message", (e) => {
       const d = JSON.parse(e.data);
@@ -86,19 +54,11 @@ class PushSocket {
 
       if (d.type !== "message") return;
       if (d.channel !== channel) return;
-      if (d.id == this.id) return;
 
       callback(d);
     });
   }
 
-  /** 
-  * Send Method; sends data (param 1) to a specified channel (param 2).
-  * If param 2 is not given, channel will default to "GLOBAL"
-  * ```js
-  * PushSocket.send("<channel: String>", "<data: String>");
-  * ```
-  */
   send(data, channel) {
     this.ws.send(JSON.stringify({
       type: "message",
@@ -107,9 +67,23 @@ class PushSocket {
       id: this.id
     }));
   }
-  /** 
-  * ``secureID`` property; returns the secure id of the socket.
-  */
+  
+  connect(space_id = "global", space_password = "password", params) {
+    this.ws = new WebSocket("wss://pushserver.cubicdev.repl.co");
+    this.space = space_id;
+    this.spacePassword = space_password;
+
+    this.ws.onopen = () => {
+      this.ws.send(JSON.stringify({
+        type: "connect",
+        id: this.id,
+        space: this.space,
+        password: this.spacePassword,
+        params: params
+      }));
+    }
+  }
+  
   get secureID() {
     return this.id;
   }

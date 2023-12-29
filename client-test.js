@@ -15,3 +15,10 @@ socket.observe("main", (signal) => {
     console.log("Pinged PS Global Staging!");
   }
 });
+
+socket.observe("log", (signal) => {
+  const data = signal.data;
+  console.log(data);
+
+  socket.send("OK", "diag");
+});
