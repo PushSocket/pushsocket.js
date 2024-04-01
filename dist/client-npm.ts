@@ -60,7 +60,7 @@ class PushSocket {
     this.spacePassword = config?.password || "password";
     this.id = generateSecureID();
     this.connected = false;
-    this.ws = new WebSocket("wss://pushserver.cubicdev.repl.co");
+    this.ws = new WebSocket("wss://ps-01.memblu.live");
 
     this.ws.onopen = () => {
       this.ws.send(JSON.stringify({
