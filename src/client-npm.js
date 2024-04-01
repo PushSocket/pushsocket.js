@@ -37,7 +37,7 @@ var PushSocket = /** @class */ (function () {
         this.spacePassword = (config === null || config === void 0 ? void 0 : config.password) || "password";
         this.id = (0, SGen_js_1.generateSecureID)();
         this.connected = false;
-        this.ws = new WebSocket("wss://pushserver.cubicdev.repl.co");
+        this.ws = new WebSocket("wss://ps-01.memblu.live");
         this.ws.onopen = function () {
             _this.ws.send(JSON.stringify({
                 type: "connect",
