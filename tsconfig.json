@@ -8,6 +8,6 @@
     "outDir": "dist"
   },
   "include": [
-    "scripts/**/*"
+    "dist/*"
   ]
 }
