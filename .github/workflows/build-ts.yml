@@ -25,6 +25,7 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://github.com/PushSocket/pushsocket.js
           git add *
           git commit -m "Pushed new build to master"
           git push
