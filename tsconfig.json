@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
     "noImplicitAny": false,
-    "noEmitOnError": true,
+    "noEmitOnError": false,
     "removeComments": false,
-    "sourceMap": true,
+    "sourceMap": false,
     "target": "es5",
     "outDir": "src"
   },
