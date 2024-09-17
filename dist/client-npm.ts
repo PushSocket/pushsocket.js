@@ -2,7 +2,6 @@
 // https://npmjs.com/package/pushsocket.js
 
 import { generateSecureID } from "./SGen.js";
-import WebSocket from "ws";
 
 /** 
 * Interface ``PSConfig``; the specification of a PushSocket config object.
