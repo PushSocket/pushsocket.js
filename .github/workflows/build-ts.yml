@@ -9,7 +9,7 @@ jobs:
         run: |
           echo "Building PushSocket on ${{runner.os}}..."
           echo "Installing Dependencies..."
-          npm install ws node-fetch
+          npm install ws node-fetch @types/node
           echo "Installed general dependencies, installing TypeScript..."
           npm install -g typescript
           echo "TypeScript installed, installing TypeDoc..."
