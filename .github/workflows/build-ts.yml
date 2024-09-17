@@ -1,0 +1,33 @@
+name: Build
+run-name: Build the TS files to JS to then be pushed out to NPM.
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Instal Dependencies
+        run: |
+          echo "Building PushSocket on ${{runner.os}}..."
+          echo "Installing Dependencies..."
+          npm install ws node-fetch
+          echo "Installed general dependencies, installing TypeScript..."
+          npm install -g typescript
+          echo "TypeScript installed, installing TypeDoc..."
+          npm install -g typedoc
+          echo "TypeDoc installed, building PushSocket..."
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Build PushSocket
+        run: |
+          tsc --build
+          echo "Built!"
+      - name: Push to Master
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add *
+          git commit -m "Pushed new build to master"
+          git push
+          echo "Pushed!"
+      - name: Complete! 🎉
+        run: echo "PushSocket has been built and pushed to master."
