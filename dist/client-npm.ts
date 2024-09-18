@@ -59,7 +59,7 @@ class PushSocket {
     this.spacePassword = config?.password || "password";
     this.id = generateSecureID();
     this.connected = false;
-    this.ws = new WebSocket("wss://ps-01.memblu.live");
+    this.ws = new WebSocket("wss://ps-01.xapktech.xyz");
 
     this.ws.onopen = () => {
       this.ws.send(JSON.stringify({
