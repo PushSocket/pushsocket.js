@@ -36,7 +36,7 @@ var PushSocket = /** @class */ (function () {
         this.spacePassword = (config === null || config === void 0 ? void 0 : config.password) || "password";
         this.id = (0, SGen_js_1.generateSecureID)();
         this.connected = false;
-        this.ws = new WebSocket("wss://ps-01.memblu.live");
+        this.ws = new WebSocket("wss://ps-01.xapktech.xyz");
         this.ws.onopen = function () {
             _this.ws.send(JSON.stringify({
                 type: "connect",
@@ -108,7 +108,7 @@ var PushSocket = /** @class */ (function () {
         var _this = this;
         if (space_id === void 0) { space_id = "global"; }
         if (space_password === void 0) { space_password = "password"; }
-        this.ws = new WebSocket("wss://pushserver.cubicdev.repl.co");
+        this.ws = new WebSocket("wss://ps-01.xapktech.xyz");
         this.space = space_id;
         this.spacePassword = space_password;
         this.ws.onopen = function () {
