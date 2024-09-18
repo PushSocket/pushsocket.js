@@ -18,9 +18,13 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin https://github-actions[bot]:${{ secrets.GITHUB_TOKEN }}@github.com/PushSocket/pushsocket.js
+          git add package.json
           npm install
           npm ci
           npm version patch
           npm publish
+          git push
+          echo "Done!"
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
