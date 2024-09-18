@@ -16,6 +16,8 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - name: Publication
         run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           npm install
           npm ci
           npm version patch
