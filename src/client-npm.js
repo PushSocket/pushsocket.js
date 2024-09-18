@@ -4,7 +4,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PushSocket = void 0;
 var SGen_js_1 = require("./SGen.js");
-var WebSocket = require("ws");
 var PushSocket = /** @class */ (function () {
     /**
     * PushSocket constructor; Accepts a config object, params to be passed to the space, and a callback to be called when the socket is connected.

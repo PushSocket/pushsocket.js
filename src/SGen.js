@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.generateSecureID = void 0;
+exports.generateSecureID = generateSecureID;
 var uppercase = [
     "A",
     "B",
@@ -68,4 +68,3 @@ function generateSecureID() {
     var id = "".concat(random(uppercase)).concat(random(uppercase)).concat(random(lowercase)).concat(random(numbers)).concat(random(uppercase)).concat(random(lowercase)).concat(random(numbers)).concat(random(uppercase)).concat(random(numbers)).concat(random(uppercase)).concat(random(uppercase)).concat(random(lowercase));
     return id;
 }
-exports.generateSecureID = generateSecureID;
