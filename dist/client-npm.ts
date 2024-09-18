@@ -131,7 +131,7 @@ class PushSocket {
   * PARAM 2: space_password: String, the password to the space.
   */
   connect(space_id: string = "global", space_password: string = "password", params: object) {
-    this.ws = new WebSocket("wss://pushserver.cubicdev.repl.co");
+    this.ws = new WebSocket("wss://ps-01.xapktech.xyz");
     this.space = space_id;
     this.spacePassword = space_password;
 
