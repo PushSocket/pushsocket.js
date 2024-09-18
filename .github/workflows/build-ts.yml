@@ -1,4 +1,4 @@
-name: Build
+name: Build (TS Compile)
 run-name: Build the TS files to JS to then be pushed out to NPM.
 on: [push]
 jobs:
