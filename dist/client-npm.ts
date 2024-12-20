@@ -20,6 +20,7 @@ interface PushSocket {
   ws: WebSocket;
   connected: boolean;
   connectedCallback: Function;
+  serverURL: string;
 }
 /** 
 * Interface ``SocketMessage``; the specification of a PushSocket message.
@@ -42,6 +43,7 @@ class PushSocket {
   * // as ES Module
   * import * as ps from "pushsocket.js";
   *
+  
   * const socket = new ps.PushSocket(
   *   {
   *     // space_id: optional, defaults to "global"
@@ -52,6 +54,8 @@ class PushSocket {
   *   null, // null, no params to the space.
   *   handleConnect // will be called when the socket is connected.
   * );
+  * // socket.serverURL = <optional, sets websocket url, must be SetSocket compatible>
+  * socket.connect();
   */
   constructor(config: PSConfig, params: object, onConnect: Function) {
     this.space = config?.space_id || "global";
@@ -59,31 +63,16 @@ class PushSocket {
     this.spacePassword = config?.password || "password";
     this.id = generateSecureID();
     this.connected = false;
-    this.ws = new WebSocket("wss://ps-01.xapktech.xyz");
+    // this.ws = new WebSocket("wss://ps-01.xapktech.xyz");
 
-    this.ws.onopen = () => {
-      this.ws.send(JSON.stringify({
-        type: "connect",
-        id: this.id,
-        space: this.space,
-        password: this.spacePassword,
-        params: params
-      }));
-    }
-
-    this.ws.onmessage = (e) => {
-      const d = JSON.parse(e.data);
-
-      if (d.type == "error") {
-        if (d.error == "invalid_password") {
-          throw new Error("PUSH_SOCKET_ERROR: INVALID PASSWORD.");
-        } else if (d.error == "invalid_space") {
-          throw new Error("PUSH_SOCKET_ERROR: INVALID SPACE.");
-        }
-      } else if (d.type == "connect_success") {
-        this.connected = true;
-        this.connectedCallback();
-      }
+    //this.ws.onopen = () => {
+     //this.ws.send(JSON.stringify({
+     //type: "connect",
+     //id: this.id,
+     //space: this.space,
+     //password: this.spacePassword,
+     //params: params
+    //}));
     }
   }
 
@@ -131,7 +120,7 @@ class PushSocket {
   * PARAM 2: space_password: String, the password to the space.
   */
   connect(space_id: string = "global", space_password: string = "password", params: object) {
-    this.ws = new WebSocket("wss://ps-01.xapktech.xyz");
+    this.ws = new WebSocket(this.serverURL);
     this.space = space_id;
     this.spacePassword = space_password;
 
@@ -144,6 +133,21 @@ class PushSocket {
         params: params
       }));
     }
+
+    this.ws.onmessage = (e) => {
+      const d = JSON.parse(e.data);
+
+      if (d.type == "error") {
+        if (d.error == "invalid_password") {
+          throw new Error("PUSH_SOCKET_ERROR: INVALID PASSWORD.");
+        } else if (d.error == "invalid_space") {
+          throw new Error("PUSH_SOCKET_ERROR: INVALID SPACE.");
+        }
+      } else if (d.type == "connect_success") {
+        this.connected = true;
+        this.connectedCallback();
+      }
+    }
   }
   /** 
   * ``secureID`` property; returns the secure id of the socket.
@@ -154,6 +158,13 @@ class PushSocket {
 
   set secureID(id) {
     throw new Error("Cannot set secureID; since it is secure.");
+  }
+  
+  /**
+  * set ```serverURL```: Setting this changes the websocket URL that PushSocket communicates with. Must be SetSocket-compatible and set before connecting.
+  */
+  set serverURL(id) {
+    this.serverURL = id;
   }
 
   private __noop__ = () => {
