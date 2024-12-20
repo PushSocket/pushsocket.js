@@ -19,7 +19,8 @@ class PushSocket {
     this.spacePassword = config?.password || "password";
     this.id = generateSecureID();
     this.connected = false;
-    this.ws = new WebSocket("wss://ps-01.xapktech.xyz");
+    this.serverURL = "wss://ps-01.xapktech.xyz";
+    this.ws = new WebSocket(this.serverURL);
 
     this.ws.onopen = () => {
       this.ws.send(JSON.stringify({
@@ -69,7 +70,7 @@ class PushSocket {
   }
   
   connect(space_id = "global", space_password = "password", params) {
-    this.ws = new WebSocket("wss://pushserver.cubicdev.repl.co");
+    this.ws = new WebSocket(this.serverURL);
     this.space = space_id;
     this.spacePassword = space_password;
 
