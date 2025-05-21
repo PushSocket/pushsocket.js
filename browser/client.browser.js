@@ -1,48 +1,35 @@
-// PushSocket.browser.js
-
-import { generateSecureID } from "";
-
-/**
- * Interface-like JSDoc to help with intellisense and clarity
- * @typedef {Object} PSConfig
- * @property {string} space_id
- * @property {string} password
- */
+// PushSocket.js (browser-ready)
+// Replace this with your secure ID generator or a placeholder
+import { generateSecureID } from './SGen.js'; // Make sure SGen.js is browser-friendly
 
 class PushSocket {
-  /**
-   * @param {PSConfig} config
-   * @param {Object} params
-   * @param {Function} onConnect
-   */
   constructor(config, params, onConnect) {
-    this.config = config || {};
+    this._serverURL = "wss://ps-01.xapktech.xyz";
+    this.config = config;
     this.space = config?.space_id || "global";
+    this.connectedCallback = onConnect;
     this.spacePassword = config?.password || "password";
     this.id = generateSecureID();
-    this.connectedCallback = onConnect;
     this.connected = false;
-    this._serverURL = "wss://ps-01.xapktech.xyz";
-    this._params = params || {};
+    this.ws = null;
+    this.params = params;
   }
 
   observe(channel, callback) {
+    if (!this.ws) return;
     this.ws.addEventListener("message", (e) => {
-      let d;
-      try {
-        d = JSON.parse(e.data);
-      } catch {
-        return;
-      }
-
+      const d = JSON.parse(e.data);
       channel = channel || "GLOBAL";
-      if (d.type !== "message" || d.channel !== channel) return;
+
+      if (d.type !== "message") return;
+      if (d.channel !== channel) return;
 
       callback(d);
     });
   }
 
   send(data, channel) {
+    if (!this.ws) return;
     this.ws.send(JSON.stringify({
       type: "message",
       channel: channel || "GLOBAL",
@@ -51,7 +38,7 @@ class PushSocket {
     }));
   }
 
-  connect(space_id = this.space, space_password = this.spacePassword, params = this._params) {
+  connect(space_id = this.config?.space_id || "global", space_password = this.config?.password || "password", params = this.params) {
     this.ws = new WebSocket(this._serverURL);
     this.space = space_id;
     this.spacePassword = space_password;
@@ -67,12 +54,7 @@ class PushSocket {
     };
 
     this.ws.onmessage = (e) => {
-      let d;
-      try {
-        d = JSON.parse(e.data);
-      } catch {
-        return;
-      }
+      const d = JSON.parse(e.data);
 
       if (d.type === "error") {
         if (d.error === "invalid_password") {
@@ -94,15 +76,15 @@ class PushSocket {
   }
 
   set secureID(_) {
-    throw new Error("Cannot set secureID; it is secure.");
-  }
-
-  get serverURL() {
-    return this._serverURL;
+    throw new Error("Cannot set secureID; since it is secure.");
   }
 
   set serverURL(url) {
     this._serverURL = url;
+  }
+
+  get serverURL() {
+    return this._serverURL;
   }
 }
 
