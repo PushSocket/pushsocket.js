@@ -1,6 +1,6 @@
 {
   "name": "pushsocket.js",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "An Open-Sourced remix of SimpleSocket, built from Scratch.",
   "main": "src/client-npm.js",
   "scripts": {
