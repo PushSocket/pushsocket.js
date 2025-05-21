@@ -58,6 +58,8 @@ class PushSocket {
   * socket.connect();
   */
   constructor(config: PSConfig, params: object, onConnect: Function) {
+    this.serverURL = "wss://ps-01.xapktech.xyz";
+    this.config = config;
     this.space = config?.space_id || "global";
     this.connectedCallback = onConnect;
     this.spacePassword = config?.password || "password";
@@ -119,7 +121,7 @@ class PushSocket {
   * PARAM 1: space_id: String, the space to connect to.
   * PARAM 2: space_password: String, the password to the space.
   */
-  connect(space_id: string = "global", space_password: string = "password", params: object) {
+  connect(space_id: string = this.config?.space_id || "global", space_password: string = this.config?.password || "password", params: object) {
     this.ws = new WebSocket(this.serverURL);
     this.space = space_id;
     this.spacePassword = space_password;
